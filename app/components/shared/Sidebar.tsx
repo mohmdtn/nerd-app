@@ -8,8 +8,8 @@ import Image from "next/image";
 
 const Sidebar = () => {
   return (
-    <aside className="h-screen w-full max-w-[16.125rem] border-e-2 border-[#EFEFEF]">
-      <div className="flex h-20 items-center justify-center gap-3 border-b-2 border-[#EFEFEF] px-4 py-[6px]">
+    <aside className="h-screen w-full max-w-[16.125rem] border-e border-[#EFEFEF]">
+      <div className="flex h-20 items-center justify-center gap-3 border-b border-[#EFEFEF] px-4 py-[6px]">
         <Image src="/logo.svg" width={44} height={44} alt="logo" />
         <h1 className="bg-gradient-to-r from-[#4D84FF] to-[#DE8FFF] bg-clip-text text-2xl font-bold text-transparent">Nerd Studio</h1>
       </div>
