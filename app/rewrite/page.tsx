@@ -14,10 +14,35 @@ const languageOption = [
   { id: "spanish", text: "Spanish" },
 ];
 
+const toneOption = [
+  { id: "auto", text: "Auto" },
+  { id: "amicable", text: "Amicable" },
+  { id: "casual", text: "Casual" },
+  { id: "friendly", text: "Friendly" },
+];
+
+const lengthOption = [
+  { id: "auto", text: "Auto" },
+  { id: "short", text: "Short" },
+  { id: "medium", text: "medium" },
+  { id: "long", text: "Long" },
+];
+
+const creativityOption = [
+  { id: "auto", text: "Auto" },
+  { id: "medium", text: "medium" },
+  { id: "high", text: "High" },
+];
+
 export default function ReWrite() {
   const [textArea, setTextArea] = useState("");
   const [language, setLanguage] = useState("english");
   const [advanceMood, setAdvanceMood] = useState(false);
+
+  const [tone, setTone] = useState("auto");
+  const [length, setLength] = useState("auto");
+  const [pointOfView, setPointOfView] = useState("auto");
+  const [creativity, setCreativity] = useState("auto");
 
   const selectChange = (checked: boolean) => {
     setAdvanceMood(checked);
@@ -77,9 +102,9 @@ export default function ReWrite() {
                 <div className="w-full">
                   <SiteHeadingH4 text="Length" />
                   <Selectbox
-                    options={languageOption}
-                    value={language}
-                    onchange={(state) => setLanguage(state)}
+                    options={lengthOption}
+                    value={length}
+                    onchange={(state) => setLength(state)}
                   />
                 </div>
 
@@ -87,9 +112,9 @@ export default function ReWrite() {
                 <div className="w-full">
                   <SiteHeadingH4 text="Tone Of Voice" />
                   <Selectbox
-                    options={languageOption}
-                    value={language}
-                    onchange={(state) => setLanguage(state)}
+                    options={toneOption}
+                    value={tone}
+                    onchange={(state) => setTone(state)}
                   />
                 </div>
               </section>
@@ -99,9 +124,9 @@ export default function ReWrite() {
                 <div className="w-full">
                   <SiteHeadingH4 text="Creativity" />
                   <Selectbox
-                    options={languageOption}
-                    value={language}
-                    onchange={(state) => setLanguage(state)}
+                    options={creativityOption}
+                    value={creativity}
+                    onchange={(state) => setCreativity(state)}
                   />
                 </div>
 
@@ -110,8 +135,8 @@ export default function ReWrite() {
                   <SiteHeadingH4 text="Point Of View" />
                   <Selectbox
                     options={languageOption}
-                    value={language}
-                    onchange={(state) => setLanguage(state)}
+                    value={pointOfView}
+                    onchange={(state) => setPointOfView(state)}
                   />
                 </div>
               </section>
@@ -122,7 +147,7 @@ export default function ReWrite() {
           <section className="flex items-end gap-3">
             {/* Choose AI */}
             <div className="w-1/2">
-              <SiteHeadingH4 text="Point Of View" />
+              <SiteHeadingH4 text="Engine" />
               <Selectbox
                 options={languageOption}
                 value={language}
