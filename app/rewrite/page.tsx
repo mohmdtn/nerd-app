@@ -220,9 +220,7 @@ export default function ReWrite() {
           <pre
             className="whitespace-pre-line"
             dangerouslySetInnerHTML={{
-              __html: markDownText(
-                "hi my name is `mohammad` and i have a big ```car```. and i wanna drive with my ```son```.",
-              ),
+              __html: markDownText(apiResult),
             }}
           ></pre>
         </div>

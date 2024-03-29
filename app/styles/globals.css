@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer utilities {
-  .markdown code {
-    background: red;
+@layer base {
+  code {
+    @apply block w-full rounded-md bg-slate-900 p-2 text-yellow-200 first-line:text-gray-100;
   }
 }
