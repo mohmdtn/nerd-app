@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PageTitle from "../components/shared/PageTitle";
 import { TbWriting } from "react-icons/tb";
 import SiteHeadingH4 from "../components/shared/headings/SiteHeadingH4";
@@ -9,6 +9,7 @@ import { Switch } from "antd";
 import { PurpleButton } from "../components/shared/buttons/PurpleButton";
 import axios from "axios";
 import { markDownText } from "../utils/markDownText";
+import { SiteContext } from "../context/SiteContext";
 
 const languageOption = [
   { id: "english", text: "English" },
@@ -37,6 +38,8 @@ const creativityOption = [
 ];
 
 export default function ReWrite() {
+  const { setSearchHistory, searchHistory } = useContext(SiteContext);
+
   const [textArea, setTextArea] = useState("");
   const [language, setLanguage] = useState("english");
   const [advanceMood, setAdvanceMood] = useState(false);
@@ -93,6 +96,19 @@ export default function ReWrite() {
         alert("Error!!");
       })
       .finally(() => setLoading(false));
+  };
+
+  const handleGenerate = () => {
+    requestToGeneratee();
+    setSearchHistory((searchHistory: any) => [
+      ...searchHistory,
+      {
+        id: Math.random(),
+        title: textArea,
+        language: language,
+        createdAt: new Date(),
+      },
+    ]);
   };
 
   return (
@@ -207,7 +223,7 @@ export default function ReWrite() {
 
             <div className="w-1/2">
               <PurpleButton
-                onclick={() => requestToGeneratee()}
+                onclick={handleGenerate}
                 disabled={textArea.length <= 1}
                 text="Rewrite"
               />

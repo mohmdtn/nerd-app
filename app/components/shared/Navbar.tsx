@@ -24,7 +24,7 @@ const data = [
 ];
 
 const Navbar = () => {
-  const { isMenuOpen, setIsMenuOpen } = useContext(SiteContext);
+  const { isMenuOpen, setIsMenuOpen, searchHistory } = useContext(SiteContext);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   return (
@@ -42,7 +42,7 @@ const Navbar = () => {
         />
         <OutlineButton Icon={IoShareSocialOutline} text="Share" />
       </div>
-      <History isOpen={isHistoryOpen} datas={data} />
+      <History isOpen={isHistoryOpen} datas={searchHistory} />
     </nav>
   );
 };

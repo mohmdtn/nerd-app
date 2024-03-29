@@ -15,11 +15,15 @@ import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+TimeAgo.addDefaultLocale(en);
+
 interface HistoryItemProps {
   id: number;
   title: string;
   language: string;
-  createdAt: string | Date;
+  createdAt: Date;
 }
 
 interface HistoryProps {
@@ -89,6 +93,8 @@ const HistoryItem = ({ title, id, createdAt, language }: HistoryItemProps) => {
   const [isPin, setIsPin] = useState(false);
   const [isMark, setIsMark] = useState(false);
 
+  const timeAgo = new TimeAgo("en-US");
+
   return (
     <section className="h-min w-full rounded-lg border border-[#EFEFEF] bg-white px-4 py-3">
       <div className="flex justify-between">
@@ -113,7 +119,7 @@ const HistoryItem = ({ title, id, createdAt, language }: HistoryItemProps) => {
       </div>
       <div className="mt-2 flex justify-between text-xs text-[#B9BAC0]">
         <h5>{language}</h5>
-        <h5>{createdAt.toString()} Min Ago</h5>
+        <h5>{timeAgo.format(createdAt)}</h5>
       </div>
     </section>
   );
