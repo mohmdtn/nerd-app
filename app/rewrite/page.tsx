@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
 import { useState } from "react";
@@ -9,7 +8,7 @@ import Selectbox from "../components/shared/Selectbox";
 import { Switch } from "antd";
 import { PurpleButton } from "../components/shared/buttons/PurpleButton";
 import axios from "axios";
-import Markdown from "react-markdown";
+import { markDownText } from "../utils/markDownText";
 
 const languageOption = [
   { id: "english", text: "English" },
@@ -94,14 +93,6 @@ export default function ReWrite() {
         alert("Error!!");
       })
       .finally(() => setLoading(false));
-  };
-
-  const markDownText = (text: string) => {
-    console.log(text);
-    let formattedText = text.replace(/```([^`]+)```/g, "<code>$1</code>");
-    formattedText = formattedText.replace(/`([^`]+)`/g, "`<strong>$1</strong>`");
-
-    return formattedText;
   };
 
   return (
