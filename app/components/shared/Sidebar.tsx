@@ -5,10 +5,16 @@ import { FaRegBell } from "react-icons/fa";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import MenuLink from "./MenuLink";
 import Image from "next/image";
+import { useContext } from "react";
+import { SiteContext } from "@/app/context/SiteContext";
 
 const Sidebar = () => {
+  const { isMenuOpen } = useContext(SiteContext);
+
   return (
-    <aside className="h-screen max-h-screen w-full max-w-[16.125rem] border-e border-[#EFEFEF]">
+    <aside
+      className={`h-screen max-h-screen w-full overflow-hidden border-e border-[#EFEFEF] duration-200 ${isMenuOpen ? "max-w-[16.125rem]" : "max-w-0"}`}
+    >
       <div className="flex h-20 items-center justify-center gap-3 border-b border-[#EFEFEF] px-4 py-[6px]">
         <Image src="/logo.svg" width={44} height={44} alt="logo" />
         <h1 className="bg-gradient-to-r from-[#4D84FF] to-[#DE8FFF] bg-clip-text text-2xl font-bold text-transparent">
@@ -28,7 +34,9 @@ const Sidebar = () => {
               alt="User Profile"
             />
             <div>
-              <h5 className="mb-1 text-sm font-semibold text-black">Sara Moradi</h5>
+              <h5 className="mb-1 text-sm font-semibold text-black">
+                Sara Moradi
+              </h5>
               <p className="text-xs text-[#747474]">Lorem</p>
             </div>
             <FaRegBell size={19} className="text-[#747474]" />
