@@ -14,9 +14,10 @@ interface SelectboxProps {
   onchange: (state: string) => void;
   value: string;
   options: Option[];
+  searchMood?: boolean;
 }
 
-const Selectbox = ({ onchange, value, options }: SelectboxProps) => {
+const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [data, setdata] = useState(options);
@@ -50,7 +51,7 @@ const Selectbox = ({ onchange, value, options }: SelectboxProps) => {
             : "pointer-events-none bottom-6 opacity-0"
         }`}
       >
-        <div className="relative mb-2 flex items-center justify-start">
+        <div className={`relative mb-2 items-center justify-start ${searchMood ? "flex" : "hidden"}`}>
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}

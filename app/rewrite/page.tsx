@@ -73,6 +73,7 @@ export default function ReWrite() {
             <SiteHeadingH4 text="Language" />
             <Selectbox
               options={languageOption}
+              searchMood
               value={language}
               onchange={(state) => setLanguage(state)}
             />
