@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
 import { useState } from "react";
@@ -8,6 +9,7 @@ import Selectbox from "../components/shared/Selectbox";
 import { Switch } from "antd";
 import { PurpleButton } from "../components/shared/buttons/PurpleButton";
 import axios from "axios";
+import Markdown from "react-markdown";
 
 const languageOption = [
   { id: "english", text: "English" },
@@ -69,16 +71,42 @@ export default function ReWrite() {
       .post("https://api.deepseek.com/v1/chat/completions", data, {
         headers: {
           Authorization: "Bearer sk-d2619482cdaa414383a8d3041cb94837",
+          responseType: "stream",
         },
+        responseType: "stream",
       })
-      .then((res) => setApiResult(res.data.choices[0].message.content))
-      .catch(() => alert("Error!!"))
+      .then(async (res) => {
+        const chunkData = res.data
+          .split("\n")
+          .filter((line: string) => line.trim().startsWith("data:"))
+          .filter((line: string | string[]) => !line.includes("[DONE]"))
+          .map((line: string) => JSON.parse(line.substring(line.indexOf("{"))));
+
+        chunkData.map(
+          (chunk: { choices: { delta: { content: string } }[] }) => {
+            console.log(chunk.choices[0].delta.content);
+            setApiResult((prev) => prev + chunk.choices[0].delta.content);
+          },
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error!!");
+      })
       .finally(() => setLoading(false));
   };
 
+  const markDownText = (text: string) => {
+    console.log(text);
+    let formattedText = text.replace(/```([^`]+)```/g, "<code>$1</code>");
+    formattedText = formattedText.replace(/`([^`]+)`/g, "`<strong>$1</strong>`");
+
+    return formattedText;
+  };
+
   return (
-    <main className="flex">
-      <section className="w-2/5 border-e border-[#EFEFEF]">
+    <main className="flex flex-col md:flex-row">
+      <section className="border-b border-[#EFEFEF] md:w-2/5 md:border-b-0 md:border-e">
         <PageTitle title="ReWrite" Icon={TbWriting} />
 
         <section className="md: flex flex-col gap-9 px-3 py-6 lg:px-5 xl:px-9">
@@ -196,7 +224,18 @@ export default function ReWrite() {
           </section>
         </section>
       </section>
-      <section className="flex w-3/5 items-center">{apiResult}</section>
+      <section className="flex items-center px-3 py-6 text-sm md:w-3/5 lg:px-5 xl:px-9">
+        <div className="max-w-full">
+          <pre
+            className="whitespace-pre-line"
+            dangerouslySetInnerHTML={{
+              __html: markDownText(
+                "hi my name is `mohammad` and i have a big ```car```. and i wanna drive with my ```son```.",
+              ),
+            }}
+          ></pre>
+        </div>
+      </section>
     </main>
   );
 }
