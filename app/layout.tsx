@@ -4,6 +4,7 @@ import "./styles/globals.css";
 import Sidebar from "./components/shared/Sidebar";
 import Navbar from "./components/shared/Navbar";
 import { SiteProvider } from "./context/SiteContext";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
               {children}
             </section>
           </section>
+          <Toaster />
         </body>
       </html>
     </SiteProvider>

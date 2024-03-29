@@ -10,13 +10,15 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { FaTrashCan } from "react-icons/fa6";
 import IconButton from "./buttons/IconButton";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { IoSearch } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
+import toast from 'react-hot-toast';
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import { SiteContext } from "@/app/context/SiteContext";
 TimeAgo.addDefaultLocale(en);
 
 interface HistoryItemProps {
@@ -90,10 +92,19 @@ const History = ({ isOpen, datas }: HistoryProps) => {
 };
 
 const HistoryItem = ({ title, id, createdAt, language }: HistoryItemProps) => {
+  const { setSearchHistory, searchHistory } = useContext(SiteContext);
+
   const [isPin, setIsPin] = useState(false);
   const [isMark, setIsMark] = useState(false);
 
   const timeAgo = new TimeAgo("en-US");
+
+  const deleteHandle = () => {
+    setSearchHistory(
+      searchHistory.filter((item: { id: number }) => item.id !== id),
+    );
+    toast.success('Item Deleted Successfuly.');
+  };
 
   return (
     <section className="h-min w-full rounded-lg border border-[#EFEFEF] bg-white px-4 py-3">
@@ -114,7 +125,11 @@ const HistoryItem = ({ title, id, createdAt, language }: HistoryItemProps) => {
             IconActive={FaBookmark}
             IconNormal={FaRegBookmark}
           />
-          <IconButton IconActive={FaTrashCan} IconNormal={FaRegTrashCan} />
+          <IconButton
+            onclick={deleteHandle}
+            IconActive={FaTrashCan}
+            IconNormal={FaRegTrashCan}
+          />
         </div>
       </div>
       <div className="mt-2 flex justify-between text-xs text-[#B9BAC0]">
