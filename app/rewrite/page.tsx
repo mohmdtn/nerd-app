@@ -7,6 +7,7 @@ import SiteHeadingH4 from "../components/shared/headings/SiteHeadingH4";
 import Selectbox from "../components/shared/Selectbox";
 import { Switch } from "antd";
 import { PurpleButton } from "../components/shared/buttons/PurpleButton";
+import axios from "axios";
 
 const languageOption = [
   { id: "english", text: "English" },
@@ -44,8 +45,35 @@ export default function ReWrite() {
   const [pointOfView, setPointOfView] = useState("auto");
   const [creativity, setCreativity] = useState("auto");
 
+  const [loading, setLoading] = useState(false);
+  const [apiResult, setApiResult] = useState("");
+
   const selectChange = (checked: boolean) => {
     setAdvanceMood(checked);
+  };
+
+  const requestToGeneratee = () => {
+    setLoading(true);
+    const prompt = `
+    Please rewrite below text in length ${length} and creativity ${creativity} and tone ${tone} in ${language}.
+    ${textArea}
+    `;
+
+    const data = {
+      model: "deepseek-chat",
+      messages: [{ role: "user", content: prompt }],
+      stream: true,
+    };
+
+    axios
+      .post("https://api.deepseek.com/v1/chat/completions", data, {
+        headers: {
+          Authorization: "Bearer sk-d2619482cdaa414383a8d3041cb94837",
+        },
+      })
+      .then((res) => setApiResult(res.data.choices[0].message.content))
+      .catch(() => alert("Error!!"))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -58,7 +86,9 @@ export default function ReWrite() {
           <div>
             <SiteHeadingH4 text="Target Text" />
             <textarea
-              onChange={(e) => setTextArea(e.target.value)}
+              onChange={(e) =>
+                textArea.length <= 200 && setTextArea(e.target.value)
+              }
               value={textArea}
               placeholder="paste your text that you wish to rewrite or improve ...  "
               className="min-h-64 w-full flex-1 resize-none flex-col rounded-lg bg-[#F8F8F8] p-3 text-xs text-gray-800 outline outline-1 outline-gray-100 hover:outline-purple-500 focus:outline focus:outline-1 focus:outline-purple-600"
@@ -158,15 +188,15 @@ export default function ReWrite() {
 
             <div className="w-1/2">
               <PurpleButton
-                onclick={() => console.log("test")}
-                disabled={false}
+                onclick={() => requestToGeneratee()}
+                disabled={textArea.length <= 1}
                 text="Rewrite"
               />
             </div>
           </section>
         </section>
       </section>
-      <section className="w-3/5"></section>
+      <section className="flex w-3/5 items-center">{apiResult}</section>
     </main>
   );
 }

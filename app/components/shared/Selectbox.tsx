@@ -39,7 +39,7 @@ const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxPr
         onClick={() => setIsOpen((prev) => !prev)}
         className="relative flex h-11 w-full cursor-pointer items-center justify-between rounded-lg bg-[#F8F8F8] px-3 text-sm text-gray-600"
       >
-        {value}
+        {options.map((item) => item.id === value && item.text)}
         <LiaAngleDownSolid
           className={`text-black duration-150 ${isOpen && "rotate-180"}`}
         />
