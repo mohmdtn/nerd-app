@@ -5,7 +5,7 @@ import OutlineButton from "./buttons/OutlineButton";
 
 const Navbar = () => {
   return (
-    <nav className="h-20 border-b border-[#EFEFEF] flex items-center justify-between px-9">
+    <nav className="flex h-20 items-center justify-between border-b border-[#EFEFEF] px-3 lg:px-5 xl:px-9">
       <button>
         <HiBars3 className="text-3xl text-gray-500" />
       </button>

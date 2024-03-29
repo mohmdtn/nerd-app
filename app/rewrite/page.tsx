@@ -53,7 +53,7 @@ export default function ReWrite() {
       <section className="w-2/5 border-e border-[#EFEFEF]">
         <PageTitle title="ReWrite" Icon={TbWriting} />
 
-        <section className="flex flex-col gap-9 px-9 py-6">
+        <section className="md: flex flex-col gap-9 px-3 py-6 lg:px-5 xl:px-9">
           {/* Textarea */}
           <div>
             <SiteHeadingH4 text="Target Text" />
