@@ -37,6 +37,12 @@ const creativityOption = [
   { id: "high", text: "High" },
 ];
 
+const pointOfViewOption = [
+  { id: "auto", text: "Auto" },
+  { id: "medium", text: "medium" },
+  { id: "high", text: "High" },
+];
+
 export default function ReWrite() {
   const { setSearchHistory, searchHistory } = useContext(SiteContext);
 
@@ -113,7 +119,7 @@ export default function ReWrite() {
 
   return (
     <main className="flex flex-col md:flex-row">
-      <section className="border-b border-[#EFEFEF] md:w-2/5 md:border-b-0 md:border-e">
+      <section className="border-b border-[#EFEFEF] md:w-1/2 md:border-b-0 md:border-e lg:w-2/5">
         <PageTitle title="ReWrite" Icon={TbWriting} />
 
         <section className="md: flex flex-col gap-9 px-3 py-6 lg:px-5 xl:px-9">
@@ -163,7 +169,7 @@ export default function ReWrite() {
           {/* Advance options */}
           {advanceMood && (
             <section className="flex flex-col gap-9">
-              <section className="flex w-full gap-3">
+              <section className="flex w-full flex-col gap-3 md:flex-row">
                 {/* Length */}
                 <div className="w-full">
                   <SiteHeadingH4 text="Length" />
@@ -185,7 +191,7 @@ export default function ReWrite() {
                 </div>
               </section>
 
-              <section className="flex w-full gap-3">
+              <section className="flex w-full flex-col gap-3 md:flex-row">
                 {/* Creativity */}
                 <div className="w-full">
                   <SiteHeadingH4 text="Creativity" />
@@ -200,7 +206,7 @@ export default function ReWrite() {
                 <div className="w-full">
                   <SiteHeadingH4 text="Point Of View" />
                   <Selectbox
-                    options={languageOption}
+                    options={pointOfViewOption}
                     value={pointOfView}
                     onchange={(state) => setPointOfView(state)}
                   />
@@ -210,9 +216,9 @@ export default function ReWrite() {
           )}
 
           {/* Submit Buttons */}
-          <section className="flex items-end gap-3">
+          <section className="flex flex-col items-end gap-3 md:flex-row">
             {/* Choose AI */}
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <SiteHeadingH4 text="Engine" />
               <Selectbox
                 options={languageOption}
@@ -221,7 +227,7 @@ export default function ReWrite() {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <PurpleButton
                 onclick={handleGenerate}
                 disabled={textArea.length <= 1}
@@ -231,7 +237,7 @@ export default function ReWrite() {
           </section>
         </section>
       </section>
-      <section className="flex items-center px-3 py-6 text-sm md:w-3/5 lg:px-5 xl:px-9">
+      <section className="lg::w-3/5 flex items-center px-3 py-6 text-sm md:w-1/2 lg:px-5 xl:px-9">
         <div className="max-w-full">
           <pre
             className="whitespace-pre-line"

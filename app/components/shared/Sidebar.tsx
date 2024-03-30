@@ -26,7 +26,7 @@ const Sidebar = () => {
           <MenuLink text="ReWrite" url="rewrite" Icon={TbWriting} />
         </section>
         <section className="border-t border-[#EFEFEF] px-5 py-6">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-center gap-4 md:justify-between md:gap-2">
             <Image
               src="/avatar.png"
               width={50}
