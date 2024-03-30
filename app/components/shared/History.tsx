@@ -15,7 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { SiteContext } from "@/app/context/SiteContext";
@@ -50,7 +50,7 @@ const History = ({ isOpen, datas }: HistoryProps) => {
 
   return (
     <section
-      className={`absolute end-0 top-full z-40 h-[calc(100vh-5rem)] w-full max-w-[24.438rem] flex-col gap-3 bg-[#F8F8F8] p-6 ${isOpen ? "flex" : "hidden"}`}
+      className={`absolute end-0 top-full z-40 h-[calc(100vh-5rem)] w-full flex-col gap-3 bg-[#F8F8F8] p-6 md:max-w-[24.438rem] ${isOpen ? "flex" : "hidden"}`}
     >
       <section className="flex items-center justify-center gap-3">
         <div className={`relative mb-2 flex w-full items-center justify-start`}>
@@ -103,7 +103,7 @@ const HistoryItem = ({ title, id, createdAt, language }: HistoryItemProps) => {
     setSearchHistory(
       searchHistory.filter((item: { id: number }) => item.id !== id),
     );
-    toast.success('Item Deleted Successfuly.');
+    toast.success("Item Deleted Successfuly.");
   };
 
   return (
