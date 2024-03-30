@@ -50,7 +50,7 @@ const History = ({ isOpen, datas }: HistoryProps) => {
 
   return (
     <section
-      className={`absolute end-0 top-full z-50 h-[calc(100vh-5rem)] w-full max-w-[24.438rem] flex-col gap-3 bg-[#F8F8F8] p-6 ${isOpen ? "flex" : "hidden"}`}
+      className={`absolute end-0 top-full z-40 h-[calc(100vh-5rem)] w-full max-w-[24.438rem] flex-col gap-3 bg-[#F8F8F8] p-6 ${isOpen ? "flex" : "hidden"}`}
     >
       <section className="flex items-center justify-center gap-3">
         <div className={`relative mb-2 flex w-full items-center justify-start`}>

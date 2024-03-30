@@ -29,7 +29,10 @@ const Navbar = () => {
 
   return (
     <nav className="relative flex h-14 items-center justify-between border-b border-[#EFEFEF] px-3 md:h-20 lg:px-5 xl:px-9">
-      <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+      <button
+        className="flex size-8 items-center justify-center rounded-md duration-200 hover:scale-125"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
         <HiBars3 className="text-3xl text-gray-500" />
       </button>
 

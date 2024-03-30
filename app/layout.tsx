@@ -22,7 +22,7 @@ export default function RootLayout({
     <SiteProvider>
       <html lang="en">
         <body className={inter.className}>
-          <section className="flex bg-white">
+          <section className="relative flex bg-white">
             <Sidebar />
             <section className="w-full">
               <Navbar />
