@@ -60,7 +60,7 @@ const IconSelectbox = ({
         />
       </div>
       <div
-        className={`absolute left-0 z-40 flex w-full flex-col gap-1 rounded-lg border bg-white p-3 shadow-sm duration-200 ${
+        className={`absolute left-0 z-30 flex w-full flex-col gap-1 rounded-lg border bg-white p-3 shadow-sm duration-200 ${
           isOpen
             ? "bottom-[110%] opacity-100"
             : "pointer-events-none bottom-6 opacity-0"
