@@ -28,7 +28,7 @@ const IconSelectbox = ({
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [data, setdata] = useState(options);
-  const [iconState, setIconState] = useState<string>("");
+  const [iconState, setIconState] = useState("/gptIcon.png");
 
   useEffect(() => {
     setdata(options);
