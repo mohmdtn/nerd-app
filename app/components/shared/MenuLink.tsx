@@ -20,9 +20,10 @@ const MenuLink = ({ text, url, Icon }: MenuLinkProps) => {
 
   return (
     <Link
-    onClick={() => windowSize <= 768 && setIsMenuOpen(false)}
+      onClick={() => windowSize <= 768 && setIsMenuOpen(false)}
       className={`flex h-[3.125rem] items-center gap-3 border-s-4 px-3.5 text-sm leading-[2.875rem] hover:bg-white ${
-        pathname === `/${url}` && "border-[#9373EE] bg-gradient-to-r from-[#F2EEFD] to-[#f2eefd37]"
+        pathname === `/${url}` &&
+        "border-[#9373EE] bg-gradient-to-r from-[#F2EEFD] to-[#f2eefd37]"
       }`}
       href={`/${url}`}
     >
