@@ -1,7 +1,8 @@
 import { useLayoutEffect, useState } from 'react';
 
 const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const isClient = typeof window === 'object';
+  const [windowSize, setWindowSize] = useState(isClient ? window.innerWidth : undefined);
 
   useLayoutEffect(() => {
     const updateSize = () => {
