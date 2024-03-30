@@ -11,6 +11,7 @@ import axios from "axios";
 import { markDownText } from "../utils/markDownText";
 import { SiteContext } from "../context/SiteContext";
 import toast from "react-hot-toast";
+import IconSelectbox from "../components/shared/IconSelectBox";
 
 const languageOption = [
   { id: "english", text: "English" },
@@ -44,6 +45,11 @@ const pointOfViewOption = [
   { id: "high", text: "High" },
 ];
 
+const engineOption = [
+  { id: "gpt", text: "GPT-3.5", icon: "/gptIcon.png" },
+  { id: "copilot", text: "Copilot", icon: "/copilotIcon.png" },
+];
+
 export default function ReWrite() {
   const { setSearchHistory, searchHistory } = useContext(SiteContext);
 
@@ -58,6 +64,9 @@ export default function ReWrite() {
 
   const [loading, setLoading] = useState(false);
   const [apiResult, setApiResult] = useState("");
+
+  const [engine, setEngine] = useState("gpt");
+
 
   const selectChange = (checked: boolean) => {
     setAdvanceMood(checked);
@@ -221,10 +230,10 @@ export default function ReWrite() {
             {/* Choose AI */}
             <div className="w-full md:w-1/2">
               <SiteHeadingH4 text="Engine" />
-              <Selectbox
-                options={languageOption}
-                value={language}
-                onchange={(state) => setLanguage(state)}
+              <IconSelectbox
+                options={engineOption}
+                value={engine}
+                onchange={(state) => setEngine(state)}
               />
             </div>
 
