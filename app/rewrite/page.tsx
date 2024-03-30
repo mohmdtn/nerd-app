@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import PageTitle from "../components/shared/PageTitle";
 import { TbWriting } from "react-icons/tb";
 import SiteHeadingH4 from "../components/shared/headings/SiteHeadingH4";
@@ -51,7 +51,7 @@ const engineOption = [
 ];
 
 export default function ReWrite() {
-  const { setSearchHistory, searchHistory } = useContext(SiteContext);
+  const { setSearchHistory } = useContext(SiteContext);
 
   const [textArea, setTextArea] = useState("");
   const [language, setLanguage] = useState("english");
@@ -66,6 +66,8 @@ export default function ReWrite() {
   const [apiResult, setApiResult] = useState("");
 
   const [engine, setEngine] = useState("gpt");
+
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const selectChange = (checked: boolean) => {
     setAdvanceMood(checked);
@@ -176,6 +178,10 @@ export default function ReWrite() {
                   setApiResult(
                     (prev) => prev + jsonData.choices[0].delta.content,
                   );
+                  if (resultRef.current) {
+                    // Scroll the element into view
+                    resultRef.current.scrollIntoView({ behavior: 'smooth' });
+                  }
                   // You can handle/process the received data here
                   isFirstEvent = false;
                 } else {
@@ -336,7 +342,7 @@ export default function ReWrite() {
         </section>
       </section>
       <section className="lg::w-3/5 flex items-center px-3 py-6 text-sm md:w-1/2 lg:px-5 xl:px-9">
-        <div className="max-w-full">
+        <div className="max-w-full" ref={resultRef}>
           <pre
             className="whitespace-pre-line"
             dangerouslySetInnerHTML={{
