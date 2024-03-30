@@ -28,7 +28,7 @@ const Navbar = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   return (
-    <nav className="relative flex h-20 items-center justify-between border-b border-[#EFEFEF] px-3 lg:px-5 xl:px-9">
+    <nav className="relative flex h-14 items-center justify-between border-b border-[#EFEFEF] px-3 md:h-20 lg:px-5 xl:px-9">
       <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
         <HiBars3 className="text-3xl text-gray-500" />
       </button>
