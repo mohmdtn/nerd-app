@@ -21,7 +21,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`absolute inset-x-0 top-14 z-50 h-[calc(100vh-3.5rem)] max-h-screen w-full overflow-hidden whitespace-nowrap border-e border-[#EFEFEF] bg-white duration-200 md:static md:h-screen ${isMenuOpen ? "max-w-full md:max-w-[16.125rem]" : "max-w-0"}`}
+      className={`fixed inset-x-0 top-14 z-50 h-[calc(100vh-3.5rem)] max-h-screen w-full overflow-hidden whitespace-nowrap border-e border-[#EFEFEF] bg-white duration-200 md:sticky md:top-0 md:h-screen ${isMenuOpen ? "max-w-full md:max-w-[16.125rem]" : "max-w-0"}`}
     >
       <Link
         onClick={() => windowSize <= 768 && setIsMenuOpen(false)}
