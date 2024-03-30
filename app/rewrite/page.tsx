@@ -1,13 +1,13 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PageTitle from "../components/shared/PageTitle";
 import { TbWriting } from "react-icons/tb";
 import SiteHeadingH4 from "../components/shared/headings/SiteHeadingH4";
 import Selectbox from "../components/shared/Selectbox";
 import { Switch } from "antd";
 import { PurpleButton } from "../components/shared/buttons/PurpleButton";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { markDownText } from "../utils/markDownText";
 import { SiteContext } from "../context/SiteContext";
 import toast from "react-hot-toast";
@@ -67,55 +67,142 @@ export default function ReWrite() {
 
   const [engine, setEngine] = useState("gpt");
 
-
   const selectChange = (checked: boolean) => {
     setAdvanceMood(checked);
   };
 
-  const requestToGeneratee = () => {
+  // const requestToGeneratee = () => {
+  // setLoading(true);
+  // const prompt = `
+  // Please rewrite below text in length ${length} and creativity ${creativity} and tone ${tone} in ${language}.
+  // ${textArea}
+  // `;
+
+  // const data = {
+  //   model: "deepseek-chat",
+  //   messages: [{ role: "user", content: prompt }],
+  //   stream: true,
+  // };
+
+  // axios
+  //   .post("https://api.deepseek.com/v1/chat/completions", data, {
+  //     headers: {
+  //       Authorization: "Bearer sk-d2619482cdaa414383a8d3041cb94837",
+  //     },
+  //     responseType: "stream",
+  //   })
+  //   .then(async (res) => {
+  //     const chunkData = res.data
+  //       .split("\n")
+  //       .filter((line: string) => line.trim().startsWith("data:"))
+  //       .filter((line: string | string[]) => !line.includes("[DONE]"))
+  //       .map((line: string) => JSON.parse(line.substring(line.indexOf("{"))));
+
+  //     chunkData.map(
+  //       (chunk: { choices: { delta: { content: string } }[] }) => {
+  //         console.log(chunk.choices[0].delta.content);
+  //         setApiResult((prev) => prev + chunk.choices[0].delta.content);
+  //       },
+  //     );
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     toast.error("Connection Error!");
+  //   })
+  //   .finally(() => setLoading(false));
+  // };
+
+  const fetchData = async () => {
     setLoading(true);
+    setApiResult("");
     const prompt = `
     Please rewrite below text in length ${length} and creativity ${creativity} and tone ${tone} in ${language}.
     ${textArea}
     `;
-
-    const data = {
-      model: "deepseek-chat",
-      messages: [{ role: "user", content: prompt }],
-      stream: true,
-    };
-
-    axios
-      .post("https://api.deepseek.com/v1/chat/completions", data, {
-        headers: {
-          Authorization: "Bearer sk-d2619482cdaa414383a8d3041cb94837",
-          responseType: "stream",
-        },
-        responseType: "stream",
-      })
-      .then(async (res) => {
-        const chunkData = res.data
-          .split("\n")
-          .filter((line: string) => line.trim().startsWith("data:"))
-          .filter((line: string | string[]) => !line.includes("[DONE]"))
-          .map((line: string) => JSON.parse(line.substring(line.indexOf("{"))));
-
-        chunkData.map(
-          (chunk: { choices: { delta: { content: string } }[] }) => {
-            console.log(chunk.choices[0].delta.content);
-            setApiResult((prev) => prev + chunk.choices[0].delta.content);
+    try {
+      const response = await fetch(
+        "https://api.deepseek.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer sk-d2619482cdaa414383a8d3041cb94837",
           },
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Connection Error!")
-      })
-      .finally(() => setLoading(false));
+          body: JSON.stringify({
+            model: "deepseek-chat",
+            messages: [{ role: "user", content: prompt }],
+            stream: true,
+          }),
+        },
+      ).finally(() => setLoading(false));
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Check if the response body is a readable stream
+      if (response.body && typeof response.body.getReader === "function") {
+        const reader = response.body.getReader();
+
+        const streamDataHandler = async () => {
+          try {
+            const textDecoder = new TextDecoder("utf-8");
+            let buffer = "";
+            let isFirstEvent = true;
+
+            while (true) {
+              const { done, value } = await reader.read();
+
+              if (done) {
+                // Stream has ended
+                console.log("Stream ended");
+                break;
+              }
+
+              // Convert Uint8Array to string
+              const chunkText = textDecoder.decode(value);
+              buffer += chunkText;
+
+              const lines = buffer.split("\n");
+
+              for (let i = 0; i < lines.length - 1; i++) {
+                const line = lines[i];
+
+                if (isFirstEvent && line.startsWith("data: ")) {
+                  // Trim 'data: ' prefix
+                  const eventData = line.substring(6);
+                  // Parse event data as JSON
+                  const jsonData = JSON.parse(eventData.trim());
+                  setApiResult(
+                    (prev) => prev + jsonData.choices[0].delta.content,
+                  );
+                  // You can handle/process the received data here
+                  isFirstEvent = false;
+                } else {
+                  isFirstEvent = true;
+                }
+              }
+
+              // Keep the last incomplete line for next iteration
+              buffer = lines[lines.length - 1];
+            }
+          } catch (error) {
+            // console.error('Error reading stream:', error);
+          }
+        };
+
+        // Start processing the stream data
+        streamDataHandler();
+      } else {
+        console.error("Response does not contain a readable stream");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const handleGenerate = () => {
-    requestToGeneratee();
+    fetchData();
     setSearchHistory((searchHistory: any) => [
       ...searchHistory,
       {
