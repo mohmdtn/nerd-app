@@ -52,12 +52,7 @@ const IconSelectbox = ({
         className="relative flex h-11 w-full cursor-pointer items-center justify-between rounded-lg bg-[#F8F8F8] px-3 text-sm text-gray-600"
       >
         <div className="flex items-center gap-2">
-          <Image
-            src={iconState}
-            width={24}
-            height={24}
-            alt="option icons"
-          />
+          <Image src={iconState} width={24} height={24} alt="option icons" />
           {options.map((item) => item.id === value && item.text)}
         </div>
         <LiaAngleDownSolid
@@ -91,7 +86,7 @@ const IconSelectbox = ({
                 setIsOpen((prev) => !prev);
                 onchange(option.id);
               }}
-              className={`flex justify-between rounded-md px-3 py-2 text-[#747474] hover:bg-[#F8F8F8] ${
+              className={`flex items-center justify-between rounded-md px-3 py-2 text-[#747474] hover:bg-[#F8F8F8] ${
                 value === option.id
                   ? "bg-[#F2EEFD] text-black"
                   : "text-[#747474]"

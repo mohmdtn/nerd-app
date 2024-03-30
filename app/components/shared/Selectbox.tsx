@@ -17,7 +17,12 @@ interface SelectboxProps {
   searchMood?: boolean;
 }
 
-const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxProps) => {
+const Selectbox = ({
+  onchange,
+  value,
+  options,
+  searchMood = false,
+}: SelectboxProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [data, setdata] = useState(options);
@@ -27,8 +32,8 @@ const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxPr
     if (search.length >= 1) {
       setdata((prev) =>
         prev.filter((item) =>
-          item.text.toLocaleLowerCase().startsWith(search.toLocaleLowerCase())
-        )
+          item.text.toLocaleLowerCase().startsWith(search.toLocaleLowerCase()),
+        ),
       );
     }
   }, [search, options]);
@@ -51,7 +56,9 @@ const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxPr
             : "pointer-events-none bottom-6 opacity-0"
         }`}
       >
-        <div className={`relative mb-2 items-center justify-start ${searchMood ? "flex" : "hidden"}`}>
+        <div
+          className={`relative mb-2 items-center justify-start ${searchMood ? "flex" : "hidden"}`}
+        >
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -69,7 +76,7 @@ const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxPr
                 setIsOpen((prev) => !prev);
                 onchange(option.id);
               }}
-              className={`flex justify-between rounded-md px-5 py-2 text-[#747474] hover:bg-[#F8F8F8] ${
+              className={`flex items-center justify-between rounded-md px-5 py-2 text-[#747474] hover:bg-[#F8F8F8] ${
                 value === option.id
                   ? "bg-[#F2EEFD] text-black"
                   : "text-[#747474]"
@@ -84,7 +91,9 @@ const Selectbox = ({ onchange, value, options, searchMood = false }: SelectboxPr
             </button>
           ))
         ) : (
-          <h1 className="p-3 text-center text-sm text-[#747474]">No Item Found</h1>
+          <h1 className="p-3 text-center text-sm text-[#747474]">
+            No Item Found
+          </h1>
         )}
       </div>
     </div>
