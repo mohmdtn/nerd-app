@@ -10,6 +10,7 @@ import { PurpleButton } from "../components/shared/buttons/PurpleButton";
 import axios from "axios";
 import { markDownText } from "../utils/markDownText";
 import { SiteContext } from "../context/SiteContext";
+import toast from "react-hot-toast";
 
 const languageOption = [
   { id: "english", text: "English" },
@@ -99,7 +100,7 @@ export default function ReWrite() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error!!");
+        toast.error("Connection Error!")
       })
       .finally(() => setLoading(false));
   };
@@ -230,8 +231,9 @@ export default function ReWrite() {
             <div className="w-full md:w-1/2">
               <PurpleButton
                 onclick={handleGenerate}
-                disabled={textArea.length <= 1}
+                disabled={textArea.length <= 1 || loading}
                 text="Rewrite"
+                loading={loading}
               />
             </div>
           </section>
