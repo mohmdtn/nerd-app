@@ -5,11 +5,18 @@ import { FaRegBell } from "react-icons/fa";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import MenuLink from "./MenuLink";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SiteContext } from "@/app/context/SiteContext";
+import useWindowSize from "@/app/hooks/useWindowSize";
 
 const Sidebar = () => {
-  const { isMenuOpen } = useContext(SiteContext);
+  const { isMenuOpen, setIsMenuOpen } = useContext(SiteContext);
+  const windowSize = useWindowSize();
+
+  useEffect(() => {
+    if (windowSize <= 768) setIsMenuOpen(false);
+    else setIsMenuOpen(true);
+  }, [setIsMenuOpen, windowSize]);
 
   return (
     <aside
